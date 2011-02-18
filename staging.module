@@ -1,33 +1,26 @@
 <?php
 
 /**
- * Implements hook_menu().
- */
-function staging_menu() {
-  $items = array();
-  $items['admin/settings/staging'] = array(
-    'title' => 'Staging',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('staging_form'),
-    'access arguments' => array('administer staging'),
-  );
-  return $items;
-}
-
-/**
  * Implements hook_block().
  */
 function staging_block($op = 'list', $delta = 0, $edit = array()) {
   switch ($op) {
 
     case 'list':
-      $blocks[0]['info'] = t('Last updated');
+      $blocks[0] = array(
+        'info' => t('Last updated'),
+        'status' => 1,
+        'region' => 'footer',
+      );
+
       return $blocks;
 
     case 'view':
       if ($delta == 0) {
-        $block['subject'] = '';
-        $block['content'] = staging_block_content();
+        $block = array(
+          'subject' => '',
+          'content' => staging_block_content(),
+        );
       }
 
       return $block;
@@ -58,3 +51,4 @@ function staging_block_content() {
 
   return '<div class="last-updated">' . $text . '</div>';
 }
+
