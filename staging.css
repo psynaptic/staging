@@ -1,0 +1,12 @@
+.block-staging .last-updated {
+  position: fixed;
+  z-index: 1000;
+  bottom: 0;
+  right: 0;
+  padding: 4px 2px 2px 4px;
+  background-color: #BDCCC7;
+  font-size: 10px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-left-radius: 5px;
+}

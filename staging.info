@@ -1,0 +1,3 @@
+name = Staging
+description = Functions for staging sites.
+core = 6.x

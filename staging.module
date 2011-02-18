@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function staging_menu() {
+  $items = array();
+  $items['admin/settings/staging'] = array(
+    'title' => 'Staging',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('staging_form'),
+    'access arguments' => array('administer staging'),
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_block().
+ */
+function staging_block($op = 'list', $delta = 0, $edit = array()) {
+  switch ($op) {
+
+    case 'list':
+      $blocks[0]['info'] = t('Last updated');
+      return $blocks;
+
+    case 'view':
+      if ($delta == 0) {
+        $block['subject'] = '';
+        $block['content'] = staging_block_content();
+      }
+
+      return $block;
+  }
+}
+
+/**
+ * Returns content for the block.
+ */
+function staging_block_content() {
+  drupal_add_css(drupal_get_path('module', 'staging') . '/staging.css');
+
+  $site_name = variable_get('site_name', 'Drupal');
+  $timestamp = variable_get('staging_last_update', '');
+
+  if (!empty($timestamp)) {
+    $text = t('The %site_name staging site was last updated on %date', array(
+      '%date' => date('r', $timestamp),
+      '%site_name' => $site_name,
+    ));
+  }
+  else {
+    $text = t('The %site_name staging site has not been updated yet.', array(
+      '!cron' => l('cron', 'admin/reports/status/run-cron', array('query' => drupal_get_destination())),
+      '%site_name' => $site_name,
+    ));
+  }
+
+  return '<div class="last-updated">' . $text . '</div>';
+}
