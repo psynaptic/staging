@@ -9,14 +9,14 @@ usually a drush command triggered on cron.
 The following is an example cron script which you can edit, save, make
 executable and periodically trigger from your user's crontab:
 
-    #!/bin/sh
+    #!/bin/bash
     cd /var/www/site_name
     git pull origin master # Replace with the update command for your VCS
     /usr/local/bin/drush vset -y staging_last_update `date +%s`
 
 ## Crontab
 
-The folowwing crontab entry will execute the cron script every 15 minutes.
+The following crontab entry will execute the cron script every 15 minutes.
 
     */15 * * * * sh /path/to/site_name.sh > /dev/null
 
